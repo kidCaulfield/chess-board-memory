@@ -1,8 +1,9 @@
 const express = require("express");
 const router = express.Router();
+const gameControler = require("../controllers/game");
 
-router.get("", (req, res) => {
-  res.json("Play Game").status(200);
-});
+router.get("", gameControler.get);
+router.get("/start", gameControler.start);
+router.post("/end", gameControler.end);
 
 module.exports = router;

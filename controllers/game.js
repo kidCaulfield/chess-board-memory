@@ -26,7 +26,7 @@ function createBoard() {
  * @returns
  */
 function squareColour(square) {
-  return square % 2 === 1 ? "black" : "white";
+  return square % 2 === 1 ? "dark" : "light";
 }
 
 // maybe control amount in the future
@@ -40,11 +40,31 @@ function pickSquares(squares) {
   return selected;
 }
 
-////////////////// Testing /////////////////////
+/**
+ * Function Check users answers using square colour function
+ * and returns result object
+ * @param {Object} answers
+ */
+function checkAnswers(answers) {
+  const result = {};
+  for (let key in answers) {
+    result[key] = answers[key] === squareColour(key) ? "correct" : "incorrect";
+  }
+  return result;
+}
 
-// const Board = createBoard();
+const board = createBoard();
 
-// const gameSquares = pickSquares(Object.keys(Board));
+module.exports = {
+  get: (req, res) => {
+    res.json(board).status(200);
+  },
 
-// const answers = gameSquares.map((val) => squareColour(val));
-// console.log("answers: ", answers);
+  start: (req, res) => {
+    res.json(pickSquares(Object.keys(board))).status(200);
+  },
+
+  end: (req, res) => {
+    res.json(checkAnswers(req.body)).status(201);
+  },
+};
