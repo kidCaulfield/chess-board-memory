@@ -23,10 +23,12 @@ function createBoard() {
 /**
  * Function determines colour of square
  * @param {number} square
- * @returns
+ * @returns {String} "dark"
  */
 function squareColour(square) {
-  return square % 2 === 1 ? "dark" : "light";
+  const rank = Math.ceil(square / 8);
+  const condition = rank % 2 === 1 ? 1 : 0;
+  return square % 2 === condition ? "dark" : "light";
 }
 
 // maybe control amount in the future
